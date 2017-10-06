@@ -1,0 +1,14 @@
+{
+  "name": "fe-interview",
+  "version": "1.0.0",
+  "description": "dex fe-interview",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "flynngao",
+  "license": "ISC",
+  "dependencies": {
+    "expressjs": "^1.0.1"
+  }
+}

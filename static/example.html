@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Order List</title>
+</head>
+
+<body>
+    <h1>Order List</h1>
+    <table id="orders">
+        <tbody>
+          <tr></tr>
+        </tbody>
+    </table>
+    <script>
+    var latest = 0;
+    setInterval(function() {
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://localhost:8080/api/getOrders', true);
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+                var data = JSON.parse(request.responseText);
+                var el = document.querySelectorAll('#orders tbody')[0]
+                var tmp = el.innerHTML;
+                for(var i = 0; i < data.length; i++){
+                  if(data[i].number > latest){
+                   tmp += '<tr><td>' + data[i].side + '</td><td>' + data[i].number + '</td><td>' + data[i].price + '</td><td>' + data[i].quantity + '</td><td>' + new Date(data[i].time).toUTCString() + '</td></tr>'
+                   latest = data[i].number;
+                  }
+                }
+                console.log(el)
+                el.innerHTML = tmp
+            } else {
+
+            }
+        };
+        request.send();
+    }, 1000)
+    </script>
+</body>
+
+</html>
