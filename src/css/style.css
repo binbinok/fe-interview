@@ -1,0 +1,41 @@
+html,body,form,ol,ul,li,div,p,dl,dt,dd,h1,h2,h3,h4,h5,h6,table,th,td,a,span{margin:0px;padding:0px;-webkit-text-size-adjust:none;-webkit-tap-highlight-color:rgba(255,0,0,0)}
+h1,h2,h3,h4,h5,h6,button,input,select,textarea,strong,b{font-size:100%;font-weight:normal}
+ol,ul{list-style:none}
+em{font-style: normal;}
+a{text-decoration:none;}a:hover{text-decoration:none}
+img{border:0;-ms-interpolation-mode:bicubic}
+body{font-size:100%;color:#333; line-height:1.4rem;font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;background: #F3F3F3}
+img{border:0px}
+a{color:#acacac}
+a:hover{color:#acacac}
+.clr{clear:both}
+.pointer{cursor:pointer}
+.none{display:none}
+[v-cloak] {display: none}
+
+.red{color:red}
+.green{color:green}
+
+#app{max-width: 640px;margin:0 auto}
+
+h1{text-align: center;line-height: 3rem;font-size: 1.25rem;width:80%;margin: 0 auto}
+h3{line-height:2rem;border-bottom:1px solid #acacac;font-size: .875rem;font-weight: bold;margin:1rem 1rem 0}
+
+.list{padding:.5rem;background:#fff}
+.list li{line-height: 2rem;border-bottom:1px solid #eee;font-size: .875rem}
+.list li header{display: flex}
+.list li:last-child{border-bottom:none}
+.list li span, .list li strong{flex: 1;text-align: center}
+.list li span:last-child, .list li strong:last-child{padding-left: 0;text-align: center}
+
+.list li .info{background:#eee;padding:0 1rem;transition: all .5s;max-height:0;overflow: hidden;font-size: .75rem}
+.list li .info.show{max-height:10rem;padding:1rem}
+.list li .info p{line-height: 1.5rem}
+
+.list-item {display: inline-block; margin-right: 10px}
+.list-enter-active, .list-leave-active {transition: all 1s}
+.list-enter{opacity: 0; transform: translateY(-5px)}
+
+@media screen and (min-width: 640px){
+    html, body{font-size: 120%}
+}

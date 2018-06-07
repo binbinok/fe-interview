@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>order book</title>
+</head>
+<body>
+    <div id="app">
+        <h1 class="none">order book</h1>
+        <ul class="list">
+            <li>
+                <header>
+                    <strong>number</strong>
+                    <strong>side</strong>
+                    <strong>price</strong>
+                    <strong>quantity</strong>
+                    <strong>time</strong>
+                </header>
+            </li>
+            <li v-for="(item, index) in filterBid" v-cloak>
+                <header>
+                    <span class="red">{{ item.number }}</span>
+                    <span>{{ item.side }}</span>
+                    <span>{{ item.price }}</span>
+                    <span>{{ item.quantity }}</span>
+                    <span>{{ getTime(item.time) }}</span>
+                </header>
+            </li>
+        </ul>
+        <ul class="list">
+            <li v-for="(item, index) in filterAsk" v-cloak>
+                <header>
+                    <span class="green">{{ item.number }}</span>
+                    <span>{{ item.side }}</span>
+                    <span>{{ item.price }}</span>
+                    <span>{{ item.quantity }}</span>
+                    <span>{{ getTime(item.time) }}</span>
+                </header>
+            </li>
+        </ul>
+
+        <h3>成功交易</h3>
+        <transition-group name="list" tag="ul" class="list">
+            <li v-for="(item, index) in filterSuccess" :key="item" @click="item.showInfo = !item.showInfo" v-cloak>
+                <header>
+                    <span>{{ item.bigInfo.price }}</span>
+                    <span>{{ getTime(item.time) }}</span>
+                </header>
+                <div :class="{show: item.showInfo, info: true}">
+                    <p v-for="p in item.logs" :key="p">
+                        {{ p.quantity }}
+                    </p>
+                    <!-- <p>买入价格： {{ item.bidInfo.price }}</p> -->
+                    <!-- <p>卖出价格： {{ item.askInfo.price }}</p> -->
+                    <p>成交时间： {{ getTime(item.time, true)}}</p>
+                </div>
+            </li>
+        </transition-group>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
