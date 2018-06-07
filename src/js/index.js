@@ -24,6 +24,7 @@ class Order {
 
     created() {
         this.time = this.id = new Date().getTime();
+        console.log('order：', this);
         vm.$data.successOrderList.unshift(this);
     }
 }
