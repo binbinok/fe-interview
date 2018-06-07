@@ -4,8 +4,8 @@
   "description": "dex fe-interview",
   "main": "index.js",
   "scripts": {
-    "dev": "node index.js & webpack && webpack-dev-server",
-    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "start": "node index.js & webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "flynngao",

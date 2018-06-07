@@ -3,30 +3,27 @@ import axios from 'axios';
 import '../css/style.css';
 
 var avg = arr => {
-    let total = arr.reduce((p, v) => p + v);
+    let total = arr.reduce((p, v) => +p + +v);
     return (total / arr.length).toFixed(2)
 };
 
 class Order {
-    constructor(big) {
-        this.bigInfo = Object.assign({}, big);
+    constructor(bid) {
+        this.bidInfo = Object.assign({}, bid);
         this.logs = [];
         this.show = false;
         this.time = null;
-        this.quantity = big.quantity;
+        this.quantity = bid.quantity;
         this.id = null
     }
 
     addLog(ask) {
         this.quantity -= ask.quantity;
-        this.logs.push(Object.assign(ask, {
-            price: avg([this.bigInfo.price, ...ask.priceAvg]),
-        }));
+        this.logs.push(Object.assign({}, ask));
     }
 
     created() {
         this.time = this.id = new Date().getTime();
-        console.log('order: ', this);
         vm.$data.successOrderList.unshift(this);
     }
 }
@@ -39,8 +36,8 @@ var vm = new Vue({
         successOrderList: []
     },
     created() {
-        // setInterval(this.loadData, 1000);
-        this.loadData();
+        setInterval(this.loadData, 1000);
+        // this.loadData();
     },
     computed: {
         filterAsk() {
@@ -82,36 +79,10 @@ var vm = new Vue({
                 bids = this.sort(this.bids, ['price', 'number'], true);
 
             let findOrder = (bid, newOrder = {}) => {
-                if (bid.quantity <= 0) return false;
-                let order = asks.find(ask => ask && ask.quantity > 0 && +ask.price < +bid.price);
-
-                return order;
-                
-                if (!order) return false;
-                
-                let _quantity = Math.min(bid.quantity, order.quantity);
-                newOrder = Object.assign({}, {
-                    number: bid.number,
-                    time: new Date().getTime(),
-                    bidInfo: bid,
-                    showInfo: false,
-                    askLog: newOrder.askLog || [],
-                });
-
-                newOrder.askLog.spush({
-                    number: order.number,
-                    price: avg(bid.price, order.price),
-                    quantity: _quantity
-                });
-                order.quantity -= _quantity;
-                bid.quantity -= _quantity;
-                if (bid.quantity > 0) {
-                    findOrder(bid, newOrder)
-                } else {
-                    this.successOrderList.unshift(newOrder);
-                }
-                
-            };
+                    if (bid.quantity <= 0) return false;
+                    let order = asks.find(ask => ask && ask.quantity > 0 && +ask.price < +bid.price);
+                    return order;
+                };
 
             let getAsk = bid => {
                 let order = new Order(bid);
@@ -119,7 +90,7 @@ var vm = new Vue({
                     let ask = findOrder(bid);
                     if (ask) {
                         let _quantity = Math.min(bid.quantity, ask.quantity),
-                            log = Object.assign(ask, {
+                            log = Object.assign({}, ask, {
                                 quantity: _quantity,
                                 priceAvg: [ask.price],
                                 time: new Date().getTime()
@@ -182,9 +153,8 @@ var vm = new Vue({
             return year ? `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}` : `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
         },
 
-        onShowInfo(index) {
-            this.successOrderList[index].showInfo = true
-            console.log()
+        avg() {
+            return avg.apply(this, arguments)
         }
     }
 });

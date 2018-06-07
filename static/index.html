@@ -43,18 +43,20 @@
 
         <h3>成功交易</h3>
         <transition-group name="list" tag="ul" class="list">
-            <li v-for="(item, index) in filterSuccess" :key="item" @click="item.showInfo = !item.showInfo" v-cloak>
+            <li v-for="(item, index) in filterSuccess" :key="item" @click="item.show = !item.show" v-cloak>
                 <header>
-                    <span>{{ item.bigInfo.price }}</span>
-                    <span>{{ getTime(item.time) }}</span>
+                    <span>{{ item.bidInfo.price }}</span>
+                    <span>{{ getTime(item.time, true) }}</span>
                 </header>
-                <div :class="{show: item.showInfo, info: true}">
+                <div :class="{show: item.show, info: true}">
                     <p v-for="p in item.logs" :key="p">
-                        {{ p.quantity }}
+                        <span>成交价：</span>
+                        <span>{{ avg([item.bidInfo.price, ...p.priceAvg]) }}</span>
+                        <span>卖价：</span>
+                        <span>{{ p.price }}</span>
+                        <span>成交时间：</span>
+                        <span>{{ getTime(p.time, true) }}</span>
                     </p>
-                    <!-- <p>买入价格： {{ item.bidInfo.price }}</p> -->
-                    <!-- <p>卖出价格： {{ item.askInfo.price }}</p> -->
-                    <p>成交时间： {{ getTime(item.time, true)}}</p>
                 </div>
             </li>
         </transition-group>
